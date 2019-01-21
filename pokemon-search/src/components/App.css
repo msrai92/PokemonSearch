@@ -1,0 +1,88 @@
+.Main {
+  background-color: silver;
+  position: absolute;
+  margin: 0;
+  padding: 0;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  overflow: auto; /* or auto or scroll */
+}
+
+.Pokemon {
+  position: relative;
+  
+  width: 100%;
+  height: 20%;
+  background-color: blue;
+  text-align: center;
+  overflow: hidden;
+  justify-content: center;
+  display: block;
+ 
+}
+
+
+.Search {
+  position: relative;
+  width: 100%;
+  height: 20%;
+  background-color: indigo;
+  text-align: center;
+  justify-content: center;
+  display: block;
+  overflow: hidden;
+}
+
+.InputField {
+  -webkit-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
+  position: absolute;
+  top: 50%;
+  left: 50%;
+}
+
+input::placeholder {
+    color: white;
+}
+
+input[type="text"] {
+    background-color: transparent;
+    border: none;
+    
+    width: 60%;
+    color: white !important;
+    font-weight: 300;
+    letter-spacing: 2px;
+    margin-right: 10px;
+    font-size: 20px;
+}
+
+input:-webkit-autofill {
+    -webkit-box-shadow: 0 0 0 30px white inset;
+    -webkit-text-fill-colo: black !important;
+}
+
+input[type="text"] {
+    outline: none;
+}
+
+button {
+    border: 0;
+    padding: auto;
+    margin: 0 auto;
+    border-radius: 10px;
+    font-weight: 300;
+    letter-spacing: 1px;
+    font-size: 20px;
+    cursor: pointer;
+    font-weight: 100;
+  }
+  
+  button:active {
+    outline: none;
+  }
+
+
+

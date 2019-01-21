@@ -1,0 +1,40 @@
+mkdir folder
+npm init -y
+npm install react react-dom --save
+npm install webpack webpack-cli --save-dev (bundle projects files into single for production)
+npm install @babel/core babel-loader @babel/preset-env @babel/preset-react --save-dev
+(
+    babel core: transforms ES6 to ES5
+    babel-loader: webpack helper to transpile code, given the preset
+    babel-preset-env: preset which helps babel to convert ES6, ES7, and ES8 code ot ES5
+    babel-preset-react: preset which transforms JSX to java script 
+)
+npm install css-loader style-loader --save-dev
+npm install html-webpack-plugin --save-dev 
+(
+    html plugin generate html file and injects script inside html file 
+    and writes file to dis/index.html
+)    
+ npm install webpack-dev-server 
+ (
+    refresh webpage when changes made to components
+ )
+
+create a index.js and index.css file as well as App.js and App.css
+we want index.js to have reactDOM render the App.js components
+
+Create a webpack.config.js to tell webpack what and how to bundle
+{
+    make sure to define rules for js and jsx files
+    configure the style loader and css with css needing a query
+}
+
+create a .bablerc file 
+{
+     "presets": ["@babel/preset-env", "@babel/preset-react"],
+    "plugins": [
+        "@babel/plugin-proposal-class-properties"
+    ]
+
+    plugin will allow us to use states
+}
