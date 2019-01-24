@@ -1,14 +1,27 @@
 import React, { Component } from "react";
-import AppStyles from './App.css';
+import AppStyles from "./App.css";
+
 class Pokemon extends Component {
   state = {};
+
+  handleClick() {
+    console.log("clicked");
+  }
+  
   render() {
-    return( 
-    <div className={AppStyles.Pokemon}>
-    {this.props.pokeImg && ( 
-    <img src={this.props.pokeImg} />
-    )}
-    </div>
+    return (
+      <div className={AppStyles.Pokemon}>
+        <div className={AppStyles.square}>
+          {this.props.pokeImg && (
+            <img
+              onClick={this.handleClick}
+              src={this.props.pokeImg}
+              className={AppStyles.image}
+            />
+          )}
+          {this.props.pokeName && (<h1>hello</h1>)}
+        </div>
+      </div>
     );
   }
 }
