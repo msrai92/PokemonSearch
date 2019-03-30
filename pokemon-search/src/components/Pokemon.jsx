@@ -19,8 +19,9 @@ class Pokemon extends Component {
               className={AppStyles.image}
             />
           )}
-          {this.props.pokeName && (<h1>hello</h1>)}
+          
         </div>
+        
       </div>
     );
   }
