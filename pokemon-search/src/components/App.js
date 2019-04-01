@@ -23,7 +23,7 @@ class App extends Component {
     console.log(targetPoke);
     try {
       const pokeCall = await fetch(
-        `http://pokeapi.co/api/v2/pokemon/${targetPoke}/`
+        `https://pokeapi.co/api/v2/pokemon/${targetPoke}/`
       );
       const pokeData = await pokeCall.json();
       console.log("found pokemon");
@@ -47,7 +47,7 @@ class App extends Component {
 
   getSpecies = async id => {
     const pokeCall = await fetch(
-      `http://pokeapi.co/api/v2/pokemon-species/${id}`
+      `https://pokeapi.co/api/v2/pokemon-species/${id}`
     );
     const pokeData = await pokeCall.json();
     console.log("species data");
@@ -157,7 +157,7 @@ class App extends Component {
       console.log(data[i].name);
       const targetPoke = data[i].name;
       const pokeCall = await fetch(
-        `http://pokeapi.co/api/v2/pokemon/${targetPoke}/`
+        `https://pokeapi.co/api/v2/pokemon/${targetPoke}/`
       );
       const pokeData = await pokeCall.json();
       console.log("found pokemon");

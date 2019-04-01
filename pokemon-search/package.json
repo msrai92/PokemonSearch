@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "description": "pokemon search ",
   "main": "index.js",
+  "proxy": "http://localhost:8080",
   "scripts": {
     "start": "webpack-dev-server --mode development --open --hot",
     "build": "webpack --mode production"
