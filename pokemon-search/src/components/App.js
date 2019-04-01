@@ -184,13 +184,11 @@ class App extends Component {
   //<Pokemon pokeImg={this.state.img} />
   //<Pokemon pokeImg={this.state.img} evolutions={this.state.evolutions} />
   render() {
-    let pokemon;
+    
     if (this.state.evoInfo!==undefined) {
-      {this.state.evoInfo.map(evolution => {
-        return (
-          <Pokemon pokeName={evolution.name} pokeUrl={evolution.url} pokeImg={evolution.sprite} />
-        )
-      })} 
+      const pokemon = this.state.evoInfo.map(evolution =>{
+        <Pokemon pokeName={evolution.name} pokeUrl={evolution.url} pokeImg={evolution.sprite} />
+      })
     }else{
       
     }
