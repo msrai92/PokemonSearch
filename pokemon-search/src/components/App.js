@@ -176,6 +176,24 @@ class App extends Component {
     });
     
   }
+
+  renderPokemon(){
+    const pokemon = [];
+    let evolutions;
+    if(this.state.evoInfo!==undefined){
+      evolutions = this.state.evoInfo;
+      for(var i=0; i<evolutions.length; i++){
+        const poke = <Pokemon pokeName={evolutions.name} pokeUrl={evolutions.url} pokeImg={evolutions.sprite} />;
+        pokemon.push(poke);
+      }
+      return pokemon;
+    }else{
+      const errMsg = <p>Your Pokemon could not be found or an error has occurred</p>
+      return errMsg;
+    }
+  }
+
+  
   componentDidMount() {
     //this.getPokemon();
     //this.getSpecies();
@@ -184,18 +202,19 @@ class App extends Component {
   //<Pokemon pokeImg={this.state.img} />
   //<Pokemon pokeImg={this.state.img} evolutions={this.state.evolutions} />
   render() {
-    
-    if (this.state.evoInfo!==undefined) {
-      const pokemon = this.state.evoInfo.map(evolution =>{
-        <Pokemon pokeName={evolution.name} pokeUrl={evolution.url} pokeImg={evolution.sprite} />
-      })
-    }else{
-      
-    }
+
+    var pokemon = [];
+    var evolutions;
+    if(this.state.evoInfo!==undefined) evolutions = this.state.evoInfo;
+
+
+
     return (
       <div className={AppStyles.Main}>
         <Search getPokemon={this.getPokemon} />
         
+        {this.renderPokemon()}
+       
       </div>
     );
   }
@@ -204,7 +223,16 @@ class App extends Component {
 export default App;
 
 /*
-{this.state.evoInfo!==undefined ? (
+if (this.state.evoInfo!==undefined) {
+      const pokemon = this.state.evoInfo.map(evolution =>{
+        <Pokemon pokeName={evolution.name} pokeUrl={evolution.url} pokeImg={evolution.sprite} />
+       
+      })
+    }else{
+      const errMsg = "Your Pokemon could not be found or an error has occurred";
+    }
+
+    {this.state.evoInfo!==undefined ? (
           <div>
             {this.state.evoInfo.map(evolution => {
               return (
@@ -213,4 +241,11 @@ export default App;
             })}
             </div>
         ): <p>{this.state.errMsg}</p>}
+
+        {this.state.evoInfo!==undefined ? (
+          <div>
+          {this.state.evoInfo(evolution => <Pokemon pokeName={evolution.name} pokeUrl={evolution.url} pokeImg={evolution.sprite}/>)}
+          </div>
+        ): <p>{this.state.errMsg}</p>}
+
 */

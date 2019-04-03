@@ -2,9 +2,13 @@ import React, { Component } from "react";
 import AppStyles from "./App.css";
 
 class Pokemon extends Component {
-  state = {};
+  state = {
+    img: undefined,
+    pokemonName: "Pikachu"
+  };
 
   handleClick() {
+    
     console.log("clicked");
   }
   
@@ -19,7 +23,7 @@ class Pokemon extends Component {
               className={AppStyles.image}
             />
           )}
-          
+          <p>Pokemon</p>
         </div>
         
       </div>
