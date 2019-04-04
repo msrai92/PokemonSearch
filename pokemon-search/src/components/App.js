@@ -163,6 +163,7 @@ class App extends Component {
       console.log("found pokemon");
       console.log(pokeData);
       const p = pokeData.sprites.front_default;
+      console.log(p);
       const entry = {
         name: data[i].name,
         url: data[i].url,
@@ -182,13 +183,15 @@ class App extends Component {
     let evolutions;
     if(this.state.evoInfo!==undefined){
       evolutions = this.state.evoInfo;
+      console.log("evolutions for render");
+      console.log(evolutions);
       for(var i=0; i<evolutions.length; i++){
-        const poke = <Pokemon pokeName={evolutions.name} pokeUrl={evolutions.url} pokeImg={evolutions.sprite} />;
+        const poke = <Pokemon pokeName={evolutions[i].name} pokeUrl={evolutions[i].url} pokeImg={evolutions[i].sprite} />;
         pokemon.push(poke);
       }
       return pokemon;
     }else{
-      const errMsg = <p>Your Pokemon could not be found or an error has occurred</p>
+      const errMsg = <p>{this.state.errMsg}</p>
       return errMsg;
     }
   }
@@ -202,11 +205,6 @@ class App extends Component {
   //<Pokemon pokeImg={this.state.img} />
   //<Pokemon pokeImg={this.state.img} evolutions={this.state.evolutions} />
   render() {
-
-    var pokemon = [];
-    var evolutions;
-    if(this.state.evoInfo!==undefined) evolutions = this.state.evoInfo;
-
 
 
     return (
