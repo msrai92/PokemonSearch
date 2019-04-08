@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import { Spring } from 'react-spring';
 import Search from "./Search.jsx";
 import Pokemon from "./Pokemon.jsx";
 import AppStyles from "./App.css";
@@ -208,12 +209,15 @@ class App extends Component {
 
 
     return (
-      <div className={AppStyles.Main}>
-        <Search getPokemon={this.getPokemon} />
-        
-        {this.renderPokemon()}
-       
-      </div>
+      <Spring from={{ opacity: 0 }} to={{ opacity:1 }}>
+        {props => (
+          <div className={AppStyles.Main} style={props}>
+            <Search getPokemon={this.getPokemon} />
+            {this.renderPokemon()}
+          </div>
+        )}  
+      </Spring>
+     
     );
   }
 }

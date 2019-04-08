@@ -10,11 +10,34 @@
   overflow: auto; /* or auto or scroll */
 }
 
+.modal{
+  height:60%;
+  width: 90%;
+  background: white;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.26);
+  position: fixed;
+  top: 20vh;
+  left: 18%;
+}
+
+@media (min-width: 768px) {
+  .modal{
+    width: 50rem;
+    left: calc(100%-50rem) / 2;
+  }
+}
+
+.PokeInfo {
+  float: right;
+  width: 60%;
+  
+}
+
 .Pokemon {
   position: relative;
   
-  width: 100%;
-  height: 20%;
+  width: 100;
+  height: 30%;
   background-color: blue;
   text-align: center;
   overflow: hidden;
@@ -41,6 +64,7 @@
   text-align: center;
   height: 200px;
   width: 200px;
+  background-color: aqua;
 }
 
 .Search {

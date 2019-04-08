@@ -11,9 +11,14 @@
   "author": "Manvir Rai",
   "license": "ISC",
   "dependencies": {
+    "bootstrap": "^4.3.1",
+    "follow-redirects": "^1.7.0",
+    "jquery": "^3.3.1",
+    "popper.js": "^1.15.0",
     "react": "^16.8.6",
     "react-bootstrap": "^0.32.4",
-    "react-dom": "^16.8.6"
+    "react-dom": "^16.8.6",
+    "reactstrap": "^8.0.0"
   },
   "devDependencies": {
     "@babel/core": "^7.4.0",
