@@ -117,7 +117,7 @@ class PokeModal extends Component {
         console.log(a);
         if(this.state.abilities!==undefined){
           for(var i=0; i<a.length; i++){
-            const poke = <p>{a[i]}</p>;
+            const poke = <span> {i+1}. {a[i]}</span>;
             pokeAbilities.push(poke);
           }
         }
@@ -133,13 +133,25 @@ class PokeModal extends Component {
             <div>        
             <Modal isOpen={this.state.modal} className={AppStyles.modal}>
 
-            <div>
+            <div className={AppStyles.pokeData}>
             <h1>{this.props.name}</h1>
-            <p>abilities: </p>
+            <p>abilities: 
+            <span>
             {this.getAbilities()}
-            <p>{this.state.height}</p>
-            <p>{this.state.weight}</p>
-            <p>{this.state.type}</p>
+            </span>
+            </p>
+            <p>
+            Height:
+            <span> {(this.state.height/0.254).toFixed(2)} inches</span>
+            </p>
+            <p>
+            Weight:
+              <span> {(this.state.weight/4.54).toFixed(2)} pounds</span>
+            </p>
+            <p>
+            Type: 
+            <span> {this.state.type}</span>
+            </p>
 
             <Button color="success" onClick={this.handleClickOutside} className={AppStyles.closeBtn}>close</Button>
             </div>
