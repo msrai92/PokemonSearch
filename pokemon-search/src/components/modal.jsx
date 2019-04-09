@@ -1,14 +1,25 @@
 import React, { Component } from 'react';
 import { Button, Modal} from 'reactstrap';
 import AppStyles from "./App.css";
+import onClickOutside from 'react-onclickoutside';
 
 class PokeModal extends Component {
     constructor(props) {
         super(props);
         this.state = { modal: false};
-    
         this.toggle = this.toggle.bind(this);
+
       }
+
+      state = {
+        modal: false,
+        abilities: undefined,
+        height: undefined,
+        weight: undefined,
+        type: undefined,
+        stats: undefined
+      }
+
     
       toggle() {
         this.setState(prevState => ({
@@ -16,22 +27,122 @@ class PokeModal extends Component {
         }));
       }
 
+  
+
+      getPokemon = async (name, url) => {
+        try {
+          const pokeCall = await fetch(
+            `https://pokeapi.co/api/v2/pokemon/${name}/`
+          );
+          const pokeData = await pokeCall.json();
+          console.log("found pokemon");
+          console.log(pokeData);
+          const pokeAbilities = [];
+          for ( let i=0; i < pokeData.abilities.length; i++) {
+            pokeAbilities.push(pokeData.abilities[i].ability.name);
+          }
+          console.log(pokeAbilities);
+          const pokeHeight = pokeData.height;
+          console.log(pokeHeight);
+          const pokeWeight = pokeData.weight;
+          console.log(pokeWeight);
+          const pokeType = [];
+          for(let k=0; k<pokeData.types.length; k++){
+            pokeType.push(pokeData.types[k].type.name)
+          }
+          console.log(pokeType);
+          const pokeStats = [];
+         
+          for (let j=0; j<pokeData.stats.length; j++) {
+           
+            const stat = {
+              name: pokeData.stats[j].stat.name,
+              base_stat: pokeData.stats[j].base_stat
+            }
+            pokeStats.push(stat)
+          }
+          console.log(pokeStats);
+
+          this.setState({
+            abilities: pokeAbilities,
+            height: pokeHeight,
+            weight: pokeWeight,
+            type: pokeType,
+            stats: pokeStats
+          });
+        } catch (err) {
+          console.log("error occurred");
+          this.setState({
+            evoFound: undefined,
+            errMsg: "No Pokemon Found"
+          })
+        }
+      };
+
       componentWillReceiveProps(){
+        console.log("pokemon pic clicked");
+        console.log(this.props.modalVisible);
+        console.log(this.props.name);
+        console.log(this.props.url);
         this.setState({
             modal: this.props.modalVisible
         });
+
+        this.getPokemon(this.props.name, this.props.url);
+        
         //console.log(this.props.name);
        //console.log(this.props.url);
       }
-     
+      renderPokemon(){
+        const pokemon = [];
+        let evolutions;
+        if(this.state.evoInfo!==undefined){
+          evolutions = this.state.evoInfo;
+          console.log("evolutions for render");
+          console.log(evolutions);
+          for(var i=0; i<evolutions.length; i++){
+            const poke = <Pokemon visible={false} pokeName={evolutions[i].name} pokeUrl={evolutions[i].url} pokeImg={evolutions[i].sprite} />;
+            pokemon.push(poke);
+          }
+          return pokemon;
+        }else{
+          const errMsg = <p>{this.state.errMsg}</p>
+          return errMsg;
+        }
+      }
+
+      getAbilities(){
+        const pokeAbilities = [];
+        let a = this.state.abilities;
+        console.log(a);
+        if(this.state.abilities!==undefined){
+          for(var i=0; i<a.length; i++){
+            const poke = <p>{a[i]}</p>;
+            pokeAbilities.push(poke);
+          }
+        }
+        return pokeAbilities;
+      }
+      handleClickOutside = () => {
+          this.setState({
+            modal: false
+          });
+      }
       render() {
         return (
             <div>        
             <Modal isOpen={this.state.modal} className={AppStyles.modal}>
-            <p>Modal is open</p>
-            <p>{this.props.name}</p>
-            <p>{this.props.url}</p>
-            <Button color="success" onClick={this.toggle}>React Modal</Button>
+
+            <div>
+            <h1>{this.props.name}</h1>
+            <p>abilities: </p>
+            {this.getAbilities()}
+            <p>{this.state.height}</p>
+            <p>{this.state.weight}</p>
+            <p>{this.state.type}</p>
+
+            <Button color="success" onClick={this.handleClickOutside} className={AppStyles.closeBtn}>close</Button>
+            </div>
             </Modal>
             </div>
           
@@ -39,4 +150,4 @@ class PokeModal extends Component {
       }
     }
  
-export default PokeModal;
+export default onClickOutside(PokeModal);

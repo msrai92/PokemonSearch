@@ -3,7 +3,7 @@ import AppStyles from "./App.css";
 
 function Search(props){
   return (
-    <div className={AppStyles.Search}>
+    <div className={AppStyles.Search} >
       <form onSubmit={props.getPokemon} className={AppStyles.InputField} >
         <input
           type="text"

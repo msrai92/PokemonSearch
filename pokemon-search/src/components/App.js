@@ -16,7 +16,9 @@ class App extends Component {
     baseSpecies: undefined,
     evoFound: undefined,
     errMsg: undefined,
-    evoInfo: undefined
+    evoInfo: undefined,
+    colorDictionary: undefined,
+    defaultColor: "FireBrick"
   };
   getPokemon = async e => {
     e.preventDefault();
@@ -154,6 +156,27 @@ class App extends Component {
     console.log("iterating pokemon component");
     console.log(data);
     const pokemon = [];
+    const dict = {
+      ground: "BurlyWood ",
+      flying: "AliceBlue",
+      normal: "Tan",
+      fighting: "Red",
+      poison: "Purple",
+      rock: "Sienna",
+      bug: "YellowGreen",
+      ghost: "RebeccaPurple",
+      steel: "Silver",
+      fire: "OrangeRed",
+      water: "DodgerBlue",
+      grass: "ForestGreen",
+      electric: "Yellow",
+      psychic: "HotPink",
+      ice: "LightSkyBlue",
+      dragon: "MediumSlateBlue",
+      dark: "#333333",
+      fairy: "Plum"
+    };
+
     for (let i = 0; i < data.length; i++) {
       console.log(data[i].name);
       const targetPoke = data[i].name;
@@ -161,14 +184,25 @@ class App extends Component {
         `https://pokeapi.co/api/v2/pokemon/${targetPoke}/`
       );
       const pokeData = await pokeCall.json();
+      const pokeType = []
+      for(let k=0; k<pokeData.types.length; k++){
+        pokeType.push(pokeData.types[k].type.name)
+      }
+      console.log(pokeType);
+      const pokeColor = dict[pokeType[0]];
+      console.log(pokeColor);
       console.log("found pokemon");
       console.log(pokeData);
       const p = pokeData.sprites.front_default;
+      //const fixedName = data[i].name.charAt(0).toUpperCase() + data[i].name.slice(1);
+      //console.log(fixedName);
       console.log(p);
       const entry = {
         name: data[i].name,
         url: data[i].url,
-        sprite: p
+        sprite: p,
+        color: pokeColor,
+        types: pokeType
       }
       pokemon.push(entry);
     }
@@ -182,12 +216,13 @@ class App extends Component {
   renderPokemon(){
     const pokemon = [];
     let evolutions;
+    console.log(this.state.evoInfo);
     if(this.state.evoInfo!==undefined){
       evolutions = this.state.evoInfo;
       console.log("evolutions for render");
       console.log(evolutions);
       for(var i=0; i<evolutions.length; i++){
-        const poke = <Pokemon pokeName={evolutions[i].name} pokeUrl={evolutions[i].url} pokeImg={evolutions[i].sprite} />;
+        const poke = <Pokemon visible={false} type={evolutions[i].types} pokeName={evolutions[i].name} pokeUrl={evolutions[i].url} pokeImg={evolutions[i].sprite} color={evolutions[i].color}/>;
         pokemon.push(poke);
       }
       return pokemon;
@@ -212,7 +247,7 @@ class App extends Component {
       <Spring from={{ opacity: 0 }} to={{ opacity:1 }}>
         {props => (
           <div className={AppStyles.Main} style={props}>
-            <Search getPokemon={this.getPokemon} />
+            <Search getPokemon={this.getPokemon} color={this.state.defaultColor}/>
             {this.renderPokemon()}
           </div>
         )}  

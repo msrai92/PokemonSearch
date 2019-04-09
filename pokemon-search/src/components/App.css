@@ -1,5 +1,5 @@
 .Main {
-  background-color: silver;
+  background-color: indigo;
   position: absolute;
   margin: 0;
   padding: 0;
@@ -27,11 +27,7 @@
   }
 }
 
-.PokeInfo {
-  float: right;
-  width: 60%;
-  
-}
+
 
 .Pokemon {
   position: relative;
@@ -64,7 +60,6 @@
   text-align: center;
   height: 200px;
   width: 200px;
-  background-color: aqua;
 }
 
 .Search {
@@ -125,6 +120,29 @@ button {
   
   button:active {
     outline: none;
+  }
+
+  .pokeData{
+
+    text-align: center;
+  }
+
+
+  .closeBtn {
+    position: absolute;
+    top: 90%;
+    right: 5%;
+    border: 0;
+    padding: auto;
+    margin: 0 auto;
+    border-radius: 10px;
+    font-weight: 300;
+    letter-spacing: 1px;
+    font-size: 20px;
+    cursor: pointer;
+    font-weight: 100;
+    
+
   }
 
 
