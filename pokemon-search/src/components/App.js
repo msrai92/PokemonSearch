@@ -2,13 +2,29 @@ import React, { Component } from "react";
 import { Spring } from 'react-spring';
 import Search from "./Search.jsx";
 import Pokemon from "./Pokemon.jsx";
+import { Button, Modal} from 'reactstrap';
 import AppStyles from "./App.css";
 import "@babel/polyfill";
 import "babel-plugin-transform-runtime";
 
-class App extends Component {
+class App extends Component { 
+  componentWillMount(){
+    const visited = localStorage["visited"];
+    if(visited){
+      this.setState({
+        popup: false
+      })
+    } else {
+      localStorage["visited"] = true;
+      this.setState({
+        popup: true
+      })
+    }
+  }
   state = {
+    popup: true,
     img: undefined,
+    target: undefined,
     pokemonInfo: undefined,
     currSpecies: undefined,
     evolutions: undefined,
@@ -22,7 +38,7 @@ class App extends Component {
   };
   getPokemon = async e => {
     e.preventDefault();
-    const targetPoke = e.target.elements.pokemonName.value;
+    const targetPoke = e.target.elements.pokemonName.value.toLowerCase();
     console.log(targetPoke);
     try {
       const pokeCall = await fetch(
@@ -34,7 +50,8 @@ class App extends Component {
       const p = pokeData.sprites.front_default;
       this.setState({
         img: p,
-        evoFound: undefined
+        evoFound: undefined,
+        target: targetPoke
       });
       if (pokeData !== undefined) {
         this.getSpecies(pokeData.species.name);
@@ -43,7 +60,8 @@ class App extends Component {
       console.log("error occurred");
       this.setState({
         evoFound: undefined,
-        errMsg: "No Pokemon Found"
+        errMsg: "No Pokemon Found",
+        target: targetPoke
       })
     }
   };
@@ -155,7 +173,7 @@ class App extends Component {
     const data = this.state.evolutions;
     console.log("iterating pokemon component");
     console.log(data);
-    const pokemon = [];
+    let pokemon = [];
     const dict = {
       ground: "BurlyWood ",
       flying: "AliceBlue",
@@ -176,10 +194,11 @@ class App extends Component {
       dark: "#333333",
       fairy: "Plum"
     };
-
+    
     for (let i = 0; i < data.length; i++) {
       console.log(data[i].name);
       const targetPoke = data[i].name;
+      
       const pokeCall = await fetch(
         `https://pokeapi.co/api/v2/pokemon/${targetPoke}/`
       );
@@ -197,6 +216,7 @@ class App extends Component {
       //const fixedName = data[i].name.charAt(0).toUpperCase() + data[i].name.slice(1);
       //console.log(fixedName);
       console.log(p);
+
       const entry = {
         name: data[i].name,
         url: data[i].url,
@@ -206,9 +226,28 @@ class App extends Component {
       }
       pokemon.push(entry);
     }
+    console.log("target poke");
+    console.log(this.state.target);
+    let targetColor = "FireBrick";
+    let targetPoke;
+    for(let i=0; i<pokemon.length; i++){
+      if(pokemon[i].name == this.state.target){
+        console.log("target found");
+        targetColor = pokemon[i].color;
+        targetPoke = pokemon[i];
+      }
+    }
+    if(pokemon.indexOf(targetPoke)>0){
+      //pokemon = pokemon.filter(item => item.name !== targetPoke);
+      pokemon.splice(pokemon.indexOf(targetPoke),1);
+      pokemon.unshift(targetPoke);
+    }
+    
     console.log(pokemon);
     this.setState({
-      evoInfo: pokemon
+      evoInfo: pokemon,
+      defaultColor: targetColor
+  
     });
     
   }
@@ -227,9 +266,15 @@ class App extends Component {
       }
       return pokemon;
     }else{
-      const errMsg = <p>{this.state.errMsg}</p>
+      const errMsg = <h3 className={AppStyles.pokeError}>{this.state.errMsg}</h3>
       return errMsg;
     }
+  }
+
+  toggleModal(){
+    this.setState({
+      popup: false
+    })
   }
 
   
@@ -246,9 +291,12 @@ class App extends Component {
     return (
       <Spring from={{ opacity: 0 }} to={{ opacity:1 }}>
         {props => (
-          <div className={AppStyles.Main} style={props}>
-            <Search getPokemon={this.getPokemon} color={this.state.defaultColor}/>
+          <div className={AppStyles.Main} style={props} style={{backgroundColor: this.state.defaultColor}}>
+            <Search getPokemon={this.getPokemon} Color={this.state.defaultColor} />
             {this.renderPokemon()}
+            <Modal isOpen={this.state.popup}>
+            <Button  onClick={this.handleClickOutside} className={AppStyles.closeBtn}>close</Button>
+            </Modal>
           </div>
         )}  
       </Spring>

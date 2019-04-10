@@ -135,22 +135,22 @@ class PokeModal extends Component {
 
             <div className={AppStyles.pokeData}>
             <h1>{this.props.name}</h1>
-            <p>abilities: 
-            <span>
+            <p className={AppStyles.pokeKey}>abilities: 
+            <span className={AppStyles.pokeValue}>
             {this.getAbilities()}
             </span>
             </p>
-            <p>
+            <p className={AppStyles.pokeKey}>
             Height:
-            <span> {(this.state.height/0.254).toFixed(2)} inches</span>
+            <span className={AppStyles.pokeValue}> {(this.state.height/0.254).toFixed(2)} inches</span>
             </p>
-            <p>
+            <p className={AppStyles.pokeKey}>
             Weight:
-              <span> {(this.state.weight/4.54).toFixed(2)} pounds</span>
+              <span className={AppStyles.pokeValue}> {(this.state.weight/4.54).toFixed(2)} pounds</span>
             </p>
-            <p>
+            <p className={AppStyles.pokeKey}>
             Type: 
-            <span> {this.state.type}</span>
+            <span className={AppStyles.pokeValue}> {this.state.type}</span>
             </p>
 
             <Button color="success" onClick={this.handleClickOutside} className={AppStyles.closeBtn}>close</Button>
