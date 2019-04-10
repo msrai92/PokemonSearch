@@ -3,6 +3,7 @@ import { Spring } from 'react-spring';
 import Search from "./Search.jsx";
 import Pokemon from "./Pokemon.jsx";
 import { Button, Modal} from 'reactstrap';
+import { Alert } from 'reactstrap';
 import AppStyles from "./App.css";
 import "@babel/polyfill";
 import "babel-plugin-transform-runtime";
@@ -34,7 +35,9 @@ class App extends Component {
     errMsg: undefined,
     evoInfo: undefined,
     colorDictionary: undefined,
-    defaultColor: "FireBrick"
+    defaultColor: "FireBrick",
+    unknownPokemon: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/25.png",
+    defaultImage: true
   };
   getPokemon = async e => {
     e.preventDefault();
@@ -51,7 +54,8 @@ class App extends Component {
       this.setState({
         img: p,
         evoFound: undefined,
-        target: targetPoke
+        target: targetPoke,
+        defaultImage: false
       });
       if (pokeData !== undefined) {
         this.getSpecies(pokeData.species.name);
@@ -292,11 +296,18 @@ class App extends Component {
       <Spring from={{ opacity: 0 }} to={{ opacity:1 }}>
         {props => (
           <div className={AppStyles.Main} style={props} style={{backgroundColor: this.state.defaultColor}}>
+            <Alert isOpen={this.state.defaultImage} color="Yellow">Enter Pokemon name to search and double click image to display information</Alert>
             <Search getPokemon={this.getPokemon} Color={this.state.defaultColor} />
+            {this.state.defaultImage && (
+              <div className={AppStyles.unknownSquare}>
+                <img
+                  src={this.state.unknownPokemon}
+                  className={AppStyles.unknownImage}
+                />
+              </div>
+            )}
             {this.renderPokemon()}
-            <Modal isOpen={this.state.popup}>
-            <Button  onClick={this.handleClickOutside} className={AppStyles.closeBtn}>close</Button>
-            </Modal>
+            
           </div>
         )}  
       </Spring>
