@@ -123,6 +123,23 @@ class PokeModal extends Component {
         }
         return pokeAbilities;
       }
+
+      getTypes(){
+        const typing = [];
+        let a = this.state.type;
+        if(this.state.type!==undefined){
+          for(var i=0; i<a.length; i++){
+            if(i===a.length-1){
+              const poke = <span> {a[i]}</span>;
+              typing.push(poke);
+            }else{
+              const poke = <span> {a[i]},</span>
+              typing.push(poke);
+            }
+          }
+        }
+        return typing;
+      }
       handleClickOutside = () => {
           this.setState({
             modal: false
@@ -134,7 +151,7 @@ class PokeModal extends Component {
             <Modal isOpen={this.state.modal} className={AppStyles.modal}>
 
             <div className={AppStyles.pokeData}>
-            <h1>{this.props.name}</h1>
+            <h1 >{this.props.name}</h1>
             <p className={AppStyles.pokeKey}>abilities: 
             <span className={AppStyles.pokeValue}>
             {this.getAbilities()}
@@ -150,7 +167,7 @@ class PokeModal extends Component {
             </p>
             <p className={AppStyles.pokeKey}>
             Type: 
-            <span className={AppStyles.pokeValue}> {this.state.type}</span>
+            <span className={AppStyles.pokeValue}> {this.getTypes()}</span>
             </p>
 
             <Button color="success" onClick={this.handleClickOutside} className={AppStyles.closeBtn}>close</Button>

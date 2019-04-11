@@ -8,7 +8,7 @@ function Search(props){
         <input
           type="text"
           name="pokemonName"
-          placeholder="enter name or id"
+          placeholder="Enter Pokemon Name or ID"
         />
         <button>search</button>
       </form>

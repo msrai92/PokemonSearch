@@ -9,6 +9,7 @@ import "@babel/polyfill";
 import "babel-plugin-transform-runtime";
 
 class App extends Component { 
+  
   componentWillMount(){
     const visited = localStorage["visited"];
     if(visited){
@@ -37,7 +38,8 @@ class App extends Component {
     colorDictionary: undefined,
     defaultColor: "FireBrick",
     unknownPokemon: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/25.png",
-    defaultImage: true
+    defaultImage: true,
+    AlertMsg: true
   };
   getPokemon = async e => {
     e.preventDefault();
@@ -55,7 +57,8 @@ class App extends Component {
         img: p,
         evoFound: undefined,
         target: targetPoke,
-        defaultImage: false
+        defaultImage: false,
+        AlertMsg: false
       });
       if (pokeData !== undefined) {
         this.getSpecies(pokeData.species.name);
@@ -275,12 +278,22 @@ class App extends Component {
     }
   }
 
-  toggleModal(){
+  onExit = (state) => {
+    console.log("dismiss alert");
     this.setState({
-      popup: false
-    })
+      AlertMsg: false
+    });
   }
 
+  /*
+  <div className={AppStyles.AlertMsg}>
+            <Alert 
+            isOpen={this.state.AlertMsg} 
+            toggle={this.onExit} 
+            > Enter Pokemon name to search and double click image to display information
+            </Alert>
+            </div>
+  */
   
   componentDidMount() {
     //this.getPokemon();
@@ -290,14 +303,13 @@ class App extends Component {
   //<Pokemon pokeImg={this.state.img} />
   //<Pokemon pokeImg={this.state.img} evolutions={this.state.evolutions} />
   render() {
-
-
     return (
       <Spring from={{ opacity: 0 }} to={{ opacity:1 }}>
         {props => (
           <div className={AppStyles.Main} style={props} style={{backgroundColor: this.state.defaultColor}}>
-            <Alert isOpen={this.state.defaultImage} color="Yellow">Enter Pokemon name to search and double click image to display information</Alert>
+            
             <Search getPokemon={this.getPokemon} Color={this.state.defaultColor} />
+            
             {this.state.defaultImage && (
               <div className={AppStyles.unknownSquare}>
                 <img
@@ -306,6 +318,7 @@ class App extends Component {
                 />
               </div>
             )}
+            
             {this.renderPokemon()}
             
           </div>

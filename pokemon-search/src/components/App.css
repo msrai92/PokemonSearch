@@ -28,6 +28,16 @@
   }
 }
 
+.AlertMsg {
+  background-color: white;
+  height: auto;
+  width: 40%;
+  margin: 5% auto; /* Will not center vertically and won't work in IE6/7. */
+  left: 0;
+  right: 0;
+  position: relative;
+
+}
 
 
 .Pokemon {
@@ -101,6 +111,7 @@
   -webkit-transform: translate(-50%, -50%);
   transform: translate(-50%, -50%);
   position: absolute;
+  width: 39%;
   top: 50%;
   left: 50%;
 }
